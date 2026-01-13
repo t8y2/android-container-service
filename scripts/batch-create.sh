@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # 基础镜像和配置
-IMAGE="android_world:easy"
+IMAGE="android_world:setup"
 BASE_PORT=${1:-5000}  # 基础控制端口，默认为5000，可通过第一个参数传递
 NUM_CONTAINERS=${2:-2} # 新建容器数量，默认为2，可通过第二个参数传递
 API_SERVER=${3:-"10.50.38.3:25718"} # API服务器地址，默认为10.50.38.3:25718，可通过第三个参数传递
