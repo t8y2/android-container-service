@@ -1,6 +1,6 @@
 # 编译后的二进制文件
 # android-container-service
-
+.DS_Store
 # 日志文件
 *.log
 
