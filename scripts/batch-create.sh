@@ -33,7 +33,7 @@ start_single_container() {
             --privileged \
             -p $HOST_PORT:5000 \
             -p $ADB_PORT:5556 \
-            -v /home/a/liwenkai/android_world:/aw \
+            -v /home/liwenkai_4cbded1a/android_world:/aw \
             -e HTTP_PROXY=http://host.docker.internal:7897 \
             -e HTTPS_PROXY=http://host.docker.internal:7897 \
             -e NO_PROXY=localhost,127.0.0.1 \

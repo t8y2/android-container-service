@@ -19,7 +19,7 @@ const DEFAULT_CONFIG = {
  *   --privileged \
  *   -p $HOST_PORT:5000 \
  *   -p $ADB_PORT:5556 \
- *   -v /home/a/liwenkai/android_world:/aw \
+ *   -v /home/liwenkai_4cbded1a/android_world:/aw \
  *   -e HTTP_PROXY=http://host.docker.internal:7897 \
  *   -e HTTPS_PROXY=http://host.docker.internal:7897 \
  *   -e NO_PROXY=localhost,127.0.0.1 \
@@ -54,10 +54,10 @@ async function createAndroidWorld(options = {}) {
 
   // 控制端口 (映射到容器内部5000端口)
   const controlPort = basePort;
-  
+
   // ADB端口 (映射到容器内部5556端口)
   const actualAdbPort = adbPort || (controlPort + 56); // 默认规律：控制端口+56
-  
+
   // Android环境端口映射
   const allPortsMapping = {
     control: controlPort,    // 主控制端口 -> 容器5000
@@ -71,7 +71,7 @@ async function createAndroidWorld(options = {}) {
     container_name: containerName || `android-${uuid}`,
     docker_config: {
       privileged: true,
-      volumes: ['/home/a/liwenkai/android_world:/aw'],
+      volumes: ['/home/liwenkai_4cbded1a/android_world:/aw'],
       environment: {
         HTTP_PROXY: 'http://host.docker.internal:7897',
         HTTPS_PROXY: 'http://host.docker.internal:7897',
@@ -221,7 +221,7 @@ function parseArguments() {
 async function main() {
   try {
     const options = parseArguments();
-    
+
     logger.info('开始创建Android环境记录', options);
 
     const uuid = await createAndroidWorld(options);
