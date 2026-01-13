@@ -5,6 +5,7 @@ IMAGE="android_world:setup"
 BASE_PORT=${1:-5000}  # 基础控制端口，默认为5000，可通过第一个参数传递
 NUM_CONTAINERS=${2:-2} # 新建容器数量，默认为2，可通过第二个参数传递
 API_SERVER=${3:-"10.50.38.3:25718"} # API服务器地址，默认为10.50.38.3:25718，可通过第三个参数传递
+FOR_ANNOTATION=${4:-"false"} # 标注专用标识，默认为false，可通过第四个参数传递
 PORT_OFFSET=1556  # ADB端口和控制端口之间的固定间隔
 MAX_RETRIES=5
 CHECK_INTERVAL=30  # 检查间隔（秒）
@@ -185,6 +186,7 @@ sync_to_database() {
     "name": "android_world_port_${HOST_PORT}",
     "description": "Android容器 - 控制端口:$HOST_PORT, ADB端口:$ADB_PORT",
     "status": "$status",
+    "for_annotation": $FOR_ANNOTATION,
     "config": {
         "adb_port": $ADB_PORT,
         "container_name": "$CONTAINER_NAME"
@@ -264,11 +266,12 @@ fi
 
 # 导出函数供 parallel 使用
 export -f start_single_container check_existing_container process_container install_socat_and_forward sync_to_database
-export IMAGE BASE_PORT PORT_OFFSET MAX_RETRIES CHECK_INTERVAL SUCCESS_TIMEOUT API_SERVER
+export IMAGE BASE_PORT PORT_OFFSET MAX_RETRIES CHECK_INTERVAL SUCCESS_TIMEOUT API_SERVER FOR_ANNOTATION
 
 echo "开始并行处理 $NUM_CONTAINERS 个容器..."
 echo "配置: BASE_PORT=${BASE_PORT}, 端口间隔=${PORT_OFFSET}, 检查间隔=${CHECK_INTERVAL}s, 成功超时=${SUCCESS_TIMEOUT}s, 最大重试=${MAX_RETRIES}次, 并行数量=${PARALLEL_JOBS}"
 echo "API服务器: $API_SERVER"
+echo "标注专用: $FOR_ANNOTATION"
 echo ""
 echo "端口分配:"
 for ((i=0; i<NUM_CONTAINERS && i<5; i++)); do

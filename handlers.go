@@ -20,6 +20,7 @@ type CreateContainerRequest struct {
 	BasePort      int    `json:"base_port" binding:"required,min=1024,max=65535"`
 	NumContainers int    `json:"num_containers" binding:"required,min=1,max=100"`
 	APIServer     string `json:"api_server"`
+	ForAnnotation bool   `json:"for_annotation"` // 标注专用标识
 }
 
 // DeleteContainerRequest 删除容器请求
@@ -78,8 +79,8 @@ func CreateContainers(c *gin.Context) {
 		return
 	}
 
-	log.Printf("[INFO] CreateContainers - 收到创建容器请求: BasePort=%d, NumContainers=%d, APIServer=%s",
-		req.BasePort, req.NumContainers, req.APIServer)
+	log.Printf("[INFO] CreateContainers - 收到创建容器请求: BasePort=%d, NumContainers=%d, APIServer=%s, ForAnnotation=%v",
+		req.BasePort, req.NumContainers, req.APIServer, req.ForAnnotation)
 
 	// 设置默认API服务器
 	if req.APIServer == "" {
@@ -116,6 +117,14 @@ func CreateContainers(c *gin.Context) {
 			fmt.Sprintf("%d", req.NumContainers),
 			req.APIServer,
 		}
+		
+		// 添加 for_annotation 参数
+		if req.ForAnnotation {
+			args = append(args, "true")
+		} else {
+			args = append(args, "false")
+		}
+		
 		log.Printf("[INFO] Task[%s] - 命令参数: %v", taskID, args)
 
 		// 执行脚本
