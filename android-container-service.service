@@ -1,0 +1,27 @@
+[Unit]
+Description=Android Container Service
+Documentation=https://github.com/your-repo/android-container-service
+After=network.target docker.service
+Requires=docker.service
+
+[Service]
+Type=simple
+User=root
+Group=root
+WorkingDirectory=/opt/android-container-service
+ExecStart=/opt/android-container-service/android-container-service
+Restart=on-failure
+RestartSec=10
+StandardOutput=append:/var/log/android-container-service/android-container-service.log
+StandardError=append:/var/log/android-container-service/android-container-service-error.log
+
+# 环境变量
+Environment="PORT=8080"
+Environment="API_SERVER=10.50.38.3:25718"
+
+# 安全限制
+NoNewPrivileges=false
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

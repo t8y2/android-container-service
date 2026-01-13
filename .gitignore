@@ -1,0 +1,22 @@
+# 编译后的二进制文件
+android-container-service
+
+# 日志文件
+*.log
+
+# 环境配置
+.env
+
+# Go相关
+go.sum
+
+# 临时文件
+*.tmp
+*.bak
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
