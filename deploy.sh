@@ -29,12 +29,28 @@ echo "✓ 目录创建完成"
 
 # 2. 编译程序
 echo ""
-echo "2. 编译程序..."
+echo "2. 检查程序文件..."
 if [ ! -f "android-container-service" ]; then
-    echo "编译Go程序..."
-    go build -o android-container-service .
+    if command -v go &> /dev/null; then
+        echo "编译Go程序..."
+        go build -o android-container-service .
+        echo "✓ 编译完成"
+    else
+        echo "❌ 错误: 未找到可执行文件 'android-container-service'"
+        echo ""
+        echo "请先编译程序："
+        echo "  方法1: 在本地编译后上传"
+        echo "    本地运行: ./build-linux.sh"
+        echo "    然后上传 android-container-service 文件到服务器"
+        echo ""
+        echo "  方法2: 在服务器上安装 Go"
+        echo "    参考: https://golang.org/doc/install"
+        echo ""
+        exit 1
+    fi
+else
+    echo "✓ 找到可执行文件"
 fi
-echo "✓ 编译完成"
 
 # 3. 复制文件
 echo ""
