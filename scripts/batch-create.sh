@@ -9,7 +9,7 @@ FOR_ANNOTATION=${4:-"false"} # 标注专用标识，默认为false，可通过�
 PORT_OFFSET=1556  # ADB端口和控制端口之间的固定间隔
 MAX_RETRIES=5
 CHECK_INTERVAL=30  # 检查间隔（秒）
-SUCCESS_TIMEOUT=120  # 成功超时时间（秒，2分钟）
+SUCCESS_TIMEOUT=60  # 成功超时时间（秒，2分钟）
 PARALLEL_JOBS=10  # 并行作业数
 
 # 启动单个容器的函数
